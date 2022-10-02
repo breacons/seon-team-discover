@@ -258,7 +258,7 @@ export const MapPage = ({}: Props) => {
     getItem(
       "Report",
       "5",
-      <SignalFilled onClick={() => setShowModal(false)} />
+      <SignalFilled onClick={() => setShowModal(true)} />
     ),
     getItem("Settings", "4", <SettingFilled />),
   ];
@@ -328,7 +328,7 @@ export const MapPage = ({}: Props) => {
 
   return (
     <Layout>
-      <Sider collapsed={true}>
+      <Sider collapsed={true} style={{zIndex: 1000}}>
         <div className={styles.avatarWrapper}>
           <img src={logo} width={40} />
         </div>
@@ -348,7 +348,7 @@ export const MapPage = ({}: Props) => {
                 content={<Notification />}
                 trigger="click"
               >
-                <Badge dot style={{ left: 7, top: 2, }}>
+                <Badge dot style={{ left: 7, top: 2 }}>
                   <BellFilled style={{ color: "#B4B5B7", fontSize: 18 }} />
                 </Badge>
               </Popover>
