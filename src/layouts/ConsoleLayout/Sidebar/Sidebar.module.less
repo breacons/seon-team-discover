@@ -1,0 +1,44 @@
+.sidebar {
+  background-color: white;
+  overflow: auto;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+  border-right: 1px solid #e8e8e8;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  :global {
+    a {
+      color: @text-color;
+    }
+
+    .ant-menu-inline {
+      border-right: none;
+    }
+
+    .ant-menu-item {
+      &:first-child {
+        margin-top: 0;
+      }
+      .anticon {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.sidebarCollapsed {
+  :global {
+    span.menu-label {
+      opacity: 0;
+    }
+  }
+}
+
+.sidebarInnerContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

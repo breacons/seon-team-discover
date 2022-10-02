@@ -1,0 +1,31 @@
+.card {
+  height: 100%;
+  border-color: rgba(0, 0, 0, 0.15);
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  padding: 28px 18px;
+  cursor: pointer;
+  -webkit-transition: border 500ms ease-out;
+  -moz-transition: border 500ms ease-out;
+  -o-transition: border 500ms ease-out;
+  transition: border 500ms ease-out;
+
+  &:hover {
+    border-color: @primary-color;
+  }
+
+  &.selected {
+    border-color: @primary-color;
+  }
+
+  & .description {
+    line-height: 26px;
+    display: block;
+  }
+
+  & .label {
+    display: block;
+    margin-bottom: 12px;
+  }
+}
