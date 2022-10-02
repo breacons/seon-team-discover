@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Segmented } from "antd";
+import {Segmented, Typography} from "antd";
 import If from "@/components/If";
 import activityChart from "./static/activity-chart.png";
 import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons";
@@ -90,7 +90,8 @@ export const PopoverContent = ({
         )}
         else={() => (
           <div>
-            <img src={activityChart} style={{ width: "100%" }} />
+            <img src={activityChart} style={{ width: "100%", marginTop: 24}} />
+            <Typography.Title level={5}  style={{ textAlign: "center",  marginTop: 12}}>Last 7 days</Typography.Title>
           </div>
         )}
       />

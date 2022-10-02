@@ -5,6 +5,8 @@ export interface Heater {
   radius: number
   level: number;
   action?: 'up' | 'down';
+  state?: number;
+  lastActionChange?: number
 }
 
 export interface Thermometer {

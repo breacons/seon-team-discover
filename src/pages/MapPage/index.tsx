@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FloorPlan } from '@/pages/MapPage/components/Floorplan';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import { Heater, Thermometer } from '@/interfaces/heater';
@@ -40,6 +40,7 @@ import firebase from 'firebase/compat/app';
 import { useFirebaseConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/reducers';
+import dayjs from 'dayjs';
 
 const { Content, Sider } = Layout;
 
@@ -47,14 +48,14 @@ interface Props {}
 
 const exampleHeaters: Heater[] = [
   {
-    id: 1,
+    id: 'heater-004',
     x: 0.7076967592592593,
     y: 0.8788065843621399,
     radius: 2.463530137324369,
     level: 2,
   },
   {
-    id: 2,
+    id: 'heater-003',
     x: 0.2145833333333337,
     y: 0.8894032921810704,
     radius: 2.2397525933202758,
@@ -62,14 +63,14 @@ const exampleHeaters: Heater[] = [
     action: 'up',
   },
   {
-    id: 3,
+    id: 'heater-002',
     x: 0.14585648148148134,
     y: 0.4873045267489713,
     radius: 1.9196780936335074,
     level: 3,
   },
   {
-    id: 4,
+    id: 'heater-001',
     x: 0.7361921296296297,
     y: 0.2152880658436214,
     radius: 2.922027807869327,
@@ -143,7 +144,7 @@ const weightedAverage = (nums, weights) => {
   return sum / weightSum;
 };
 
-// console.log(JSON.stringify(_.keyBy(exampleThermometers, "id")))
+// console.log(JSON.stringify(_.keyBy(exampleHeaters, 'id')));
 
 const ratio = 0.9;
 const width = 1920 * ratio;
@@ -236,14 +237,30 @@ const Notification = () => (
   </div>
 );
 
-const setHeaterState = async (state: number) => {
-  await firebase.database().ref('heaters/heater-001').update({ state });
-};
-
 export const MapPage = ({}: Props) => {
   const [heaters, setHeaters] = useState(exampleHeaters);
   const [thermometers, setThermometers] = useState(exampleThermometers);
   const [showModal, setShowModal] = useState(false);
+
+  const setHeaterState = useCallback(async (state: number) => {
+    const heater = (await firebase.database().ref('heaters/heater-001').get()).val();
+
+    if (heater.state === 0 && state === 1) {
+      await firebase
+        .database()
+        .ref('heaters/heater-001')
+        .update({ state,  lastActionChange: dayjs().unix(), level: heater.level - 1});
+    }
+
+    if (heater.state === 1 && state === 0) {
+      await firebase
+        .database()
+        .ref('heaters/heater-001')
+        .update({ state, lastActionChange: dayjs().unix(), level: heater.level + 1});
+    }
+
+
+  }, []);
 
   useEffect(() => {
     firebase
@@ -253,8 +270,7 @@ export const MapPage = ({}: Props) => {
         const values: any = value.val();
 
         if (
-          values['1337-0420'] &&
-          values['1337-0420'].currentTemperature &&
+          values['1337-0420']?.currentTemperature &&
           parseFloat(values['1337-0420'].currentTemperature) > 30
         ) {
           setHeaterState(1);
@@ -263,6 +279,15 @@ export const MapPage = ({}: Props) => {
         }
 
         setThermometers(Object.values(values));
+      });
+
+    firebase
+      .database()
+      .ref('heaters')
+      .on('value', (value) => {
+        const values: any = value.val();
+
+        setHeaters(Object.values(values));
       });
   }, []);
 

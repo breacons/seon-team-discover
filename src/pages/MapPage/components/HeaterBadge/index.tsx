@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Progress } from "antd";
 import classNames from "classnames";
 import styles from "./styles.module.less";
@@ -7,9 +7,7 @@ interface Props {}
 
 const size = 80;
 export const HeaterBadge = ({ radius, level, action }: any) => {
-
   let colors = "#1890ff/".repeat(level).split('/').filter(s => s !== '');
-
 
   if (action === 'up') {
     colors.push( '#52c41a')
