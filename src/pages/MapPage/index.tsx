@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { FloorPlan } from "@/pages/MapPage/components/Floorplan";
-import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
-import { Heater, Thermometer } from "@/interfaces/heater";
-import HeaterBadge from "@/pages/MapPage/components/HeaterBadge";
-import styles from "./styles.module.less";
-import _ from "lodash";
-import ThermometerBadge from "@/pages/MapPage/components/ThermometerBadge";
+import React, { useEffect, useState } from 'react';
+import { FloorPlan } from '@/pages/MapPage/components/Floorplan';
+import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
+import { Heater, Thermometer } from '@/interfaces/heater';
+import HeaterBadge from '@/pages/MapPage/components/HeaterBadge';
+import styles from './styles.module.less';
+import _ from 'lodash';
+import ThermometerBadge from '@/pages/MapPage/components/ThermometerBadge';
 import {
   Avatar,
   Badge,
@@ -22,9 +22,9 @@ import {
   Statistic,
   Tabs,
   Typography,
-} from "antd";
-import logo from "./static/superset-logo.png";
-import savingDiagram from "./static/saving-diagram.png";
+} from 'antd';
+import logo from './static/superset-logo.png';
+import savingDiagram from './static/saving-diagram.png';
 
 import {
   BellFilled,
@@ -34,12 +34,12 @@ import {
   SignalFilled,
   ArrowUpOutlined,
   ArrowDownOutlined,
-} from "@ant-design/icons";
-import { useSensors } from "@/hooks/use-sensors";
-import firebase from "firebase/compat/app";
-import { useFirebaseConnect } from "react-redux-firebase";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/reducers";
+} from '@ant-design/icons';
+import { useSensors } from '@/hooks/use-sensors';
+import firebase from 'firebase/compat/app';
+import { useFirebaseConnect } from 'react-redux-firebase';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/reducers';
 
 const { Content, Sider } = Layout;
 
@@ -59,14 +59,14 @@ const exampleHeaters: Heater[] = [
     y: 0.8894032921810704,
     radius: 2.2397525933202758,
     level: 3,
-    action: 'up'
+    action: 'up',
   },
   {
     id: 3,
     x: 0.14585648148148134,
     y: 0.4873045267489713,
     radius: 1.9196780936335074,
-    level: 3
+    level: 3,
   },
   {
     id: 4,
@@ -74,57 +74,57 @@ const exampleHeaters: Heater[] = [
     y: 0.2152880658436214,
     radius: 2.922027807869327,
     level: 3,
-    action: 'down'
+    action: 'down',
   },
 ];
 
 const exampleThermometers: Thermometer[] = [
   {
-    id: "1337-0069",
+    id: '1337-0069',
     x: 0.3435763888888892,
     y: 0.6438271604938274,
     currentTemperature: 20,
     currentHumidity: 34,
-    label: "Living Room",
+    label: 'Living Room',
     batteryPercentage: 70,
     desiredTemperature: 21,
   },
   {
-    id: "1337-0002",
+    id: '1337-0002',
     x: 0.5197337962962957,
     y: 0.6659465020576132,
     currentTemperature: 21,
-    label: "Kitchen",
+    label: 'Kitchen',
     currentHumidity: 39,
     batteryPercentage: 89,
     desiredTemperature: 20,
   },
   {
-    id: "1337-0003",
+    id: '1337-0003',
     x: 0.1871527777777778,
     y: 0.19907407407407396,
     currentTemperature: 18,
-    label: "Bathroom",
+    label: 'Bathroom',
     batteryPercentage: 34,
     currentHumidity: 41,
     desiredTemperature: 20,
   },
   {
-    id: "1337-0420",
+    id: '1337-0420',
     x: 0.5949652777777773,
     y: 0.1407407407407408,
     currentTemperature: 22,
-    label: "Bedroom",
+    label: 'Bedroom',
     batteryPercentage: 57,
     currentHumidity: 34,
     desiredTemperature: 22,
   },
   {
-    id: "outside",
+    id: 'outside',
     x: 0.8337962962962965,
     y: 0.10751028806584353,
     currentTemperature: 8,
-    label: "Outside",
+    label: 'Outside',
     batteryPercentage: 57,
     isExternal: true,
     currentHumidity: 19,
@@ -138,10 +138,12 @@ const weightedAverage = (nums, weights) => {
       acc[1] = acc[1] + w;
       return acc;
     },
-    [0, 0]
+    [0, 0],
   );
   return sum / weightSum;
 };
+
+// console.log(JSON.stringify(_.keyBy(exampleThermometers, "id")))
 
 const ratio = 0.9;
 const width = 1920 * ratio;
@@ -153,13 +155,13 @@ const distanceBetweenHeaterAndThermometer = (h: Heater, t: Thermometer) => {
   return Math.sqrt((h.x - t.x) ** 2 + (h.y - t.y) ** 2);
 };
 
-type MenuItem = Required<MenuProps>["items"][number];
+type MenuItem = Required<MenuProps>['items'][number];
 
 function getItem(
   label: React.ReactNode,
   key: React.Key,
   icon?: React.ReactNode,
-  children?: any
+  children?: any,
 ): MenuItem {
   return {
     key,
@@ -190,8 +192,8 @@ const Notification = () => (
     <Space direction="horizontal" size={16}>
       <Avatar
         style={{
-          backgroundColor: "#1890ff",
-          verticalAlign: "middle",
+          backgroundColor: '#1890ff',
+          verticalAlign: 'middle',
           borderRadius: 8,
         }}
         size="large"
@@ -200,10 +202,7 @@ const Notification = () => (
         LR
       </Avatar>
       <div>
-        <Typography.Title
-          level={5}
-          style={{ paddingTop: 12, marginBottom: -6 }}
-        >
+        <Typography.Title level={5} style={{ paddingTop: 12, marginBottom: -6 }}>
           Set heater to Level 4.
         </Typography.Title>
         <Typography.Paragraph>
@@ -216,8 +215,8 @@ const Notification = () => (
     <Space direction="horizontal" size={16}>
       <Avatar
         style={{
-          backgroundColor: "#ff8042",
-          verticalAlign: "middle",
+          backgroundColor: '#ff8042',
+          verticalAlign: 'middle',
           borderRadius: 8,
         }}
         size="large"
@@ -226,10 +225,7 @@ const Notification = () => (
         K
       </Avatar>
       <div>
-        <Typography.Title
-          level={5}
-          style={{ paddingTop: 12, marginBottom: -6 }}
-        >
+        <Typography.Title level={5} style={{ paddingTop: 12, marginBottom: -6 }}>
           Set heater to Level 2.
         </Typography.Title>
         <Typography.Paragraph>
@@ -240,34 +236,47 @@ const Notification = () => (
   </div>
 );
 
+const setHeaterState = async (state: number) => {
+  await firebase.database().ref('heaters/heater-001').update({ state });
+};
+
 export const MapPage = ({}: Props) => {
   const [heaters, setHeaters] = useState(exampleHeaters);
   const [thermometers, setThermometers] = useState(exampleThermometers);
   const [showModal, setShowModal] = useState(false);
 
-  // const {  } = useSensors();
+  useEffect(() => {
+    firebase
+      .database()
+      .ref('sensors')
+      .on('value', (value) => {
+        const values: any = value.val();
 
-  console.log({ heaters, thermometers });
+        if (
+          values['1337-0420'] &&
+          values['1337-0420'].currentTemperature &&
+          parseFloat(values['1337-0420'].currentTemperature) > 30
+        ) {
+          setHeaterState(1);
+        } else {
+          setHeaterState(0);
+        }
+
+        setThermometers(Object.values(values));
+      });
+  }, []);
 
   const items: any = [
-    getItem("Home", "0", <HomeFilled />),
-    getItem("Scenarios", "6", <CalendarFilled />),
+    getItem('Home', '0', <HomeFilled />),
+    getItem('Scenarios', '6', <CalendarFilled />),
 
     // getItem("Option 1", "1", <PieChartFilled />),
     // getItem("Notifications", "3", <BellFilled />, [<div>Hellp</div>]),
-    getItem(
-      "Report",
-      "5",
-      <SignalFilled onClick={() => setShowModal(true)} />
-    ),
-    getItem("Settings", "4", <SettingFilled />),
+    getItem('Report', '5', <SignalFilled onClick={() => setShowModal(true)} />),
+    getItem('Settings', '4', <SettingFilled />),
   ];
 
-  const eventLogger = (
-    e: DraggableEvent,
-    data: DraggableData,
-    id: string | number
-  ) => {
+  const eventLogger = (e: DraggableEvent, data: DraggableData, id: string | number) => {
     const { x, y } = data;
 
     const newX = (x + size / 2) / width;
@@ -281,11 +290,7 @@ export const MapPage = ({}: Props) => {
     setHeaters(updated);
   };
 
-  const moveThermometer = (
-    e: DraggableEvent,
-    data: DraggableData,
-    id: string | number
-  ) => {
+  const moveThermometer = (e: DraggableEvent, data: DraggableData, id: string | number) => {
     const { x, y } = data;
 
     const newX = (x + size / 2) / width;
@@ -302,17 +307,14 @@ export const MapPage = ({}: Props) => {
     setThermometers(updatedThermometers);
 
     const updatedHeaters = heaters.map((h) => {
-      const internalThermometers = _.reject(
-        updatedThermometers,
-        (t) => t.isExternal === true
-      );
+      const internalThermometers = _.reject(updatedThermometers, (t) => t.isExternal === true);
       const distances = internalThermometers.map((t) => {
         return 1 / distanceBetweenHeaterAndThermometer(h, t);
       });
 
       const avg = weightedAverage(
         internalThermometers.map((t) => t.currentTemperature),
-        distances
+        distances,
       );
 
       // console.log({h, updatedThermometers, distances, avg})
@@ -328,7 +330,7 @@ export const MapPage = ({}: Props) => {
 
   return (
     <Layout>
-      <Sider collapsed={true} style={{zIndex: 1000}}>
+      <Sider collapsed={true} style={{ zIndex: 1000 }}>
         <div className={styles.avatarWrapper}>
           <img src={logo} width={40} />
         </div>
@@ -337,19 +339,14 @@ export const MapPage = ({}: Props) => {
             <Menu
               theme="dark"
               selectedKeys={[]}
-              defaultSelectedKeys={["1"]}
+              defaultSelectedKeys={['1']}
               mode="inline"
               items={items}
             />
             <div className={styles.notificationWrapper}>
-              <Popover
-                placement="right"
-                title={null}
-                content={<Notification />}
-                trigger="click"
-              >
+              <Popover placement="right" title={null} content={<Notification />} trigger="click">
                 <Badge dot style={{ left: 7, top: 2 }}>
-                  <BellFilled style={{ color: "#B4B5B7", fontSize: 18 }} />
+                  <BellFilled style={{ color: '#B4B5B7', fontSize: 18 }} />
                 </Badge>
               </Popover>
             </div>
@@ -366,7 +363,7 @@ export const MapPage = ({}: Props) => {
       <Content className={styles.content}>
         <div
           style={{
-            position: "relative",
+            position: 'relative',
             top: 0,
             left: 0,
             // width,
@@ -391,7 +388,7 @@ export const MapPage = ({}: Props) => {
               // onDrag={this.handleDrag}
               onDrag={(e, d) => eventLogger(e, d, heater.id)}
             >
-              <div style={{ position: "absolute" }}>
+              <div style={{ position: 'absolute' }}>
                 <HeaterBadge {...heater} />
               </div>
             </Draggable>
@@ -414,7 +411,7 @@ export const MapPage = ({}: Props) => {
                 // onDrag={this.handleDrag}
                 onDrag={(e, d) => moveThermometer(e, d, thermometer.id)}
               >
-                <div style={{ position: "absolute" }}>
+                <div style={{ position: 'absolute' }}>
                   <ThermometerBadge {...thermometer} />
                 </div>
               </Draggable>
@@ -422,7 +419,7 @@ export const MapPage = ({}: Props) => {
         </div>
         <div
           style={{
-            position: "relative",
+            position: 'relative',
           }}
         >
           <FloorPlan heaters={heaters} />
@@ -442,7 +439,7 @@ export const MapPage = ({}: Props) => {
                 title="System Efficiency"
                 value={12.0}
                 precision={0}
-                valueStyle={{ color: "#3f8600" }}
+                valueStyle={{ color: '#3f8600' }}
                 prefix={<ArrowUpOutlined />}
                 suffix="%"
               />
@@ -454,7 +451,7 @@ export const MapPage = ({}: Props) => {
                 title="Saved Cost (Past Year)"
                 value={318}
                 precision={0}
-                valueStyle={{ color: "#3f8600" }}
+                valueStyle={{ color: '#3f8600' }}
                 prefix={<ArrowUpOutlined />}
                 suffix="€"
               />
@@ -466,7 +463,7 @@ export const MapPage = ({}: Props) => {
                 title="Saved Energy (Past Year)"
                 value={1.6}
                 precision={1}
-                valueStyle={{ color: "#3f8600" }}
+                valueStyle={{ color: '#3f8600' }}
                 prefix={<ArrowUpOutlined />}
                 suffix="MWh"
               />
@@ -475,14 +472,14 @@ export const MapPage = ({}: Props) => {
         </Row>
         <Typography.Title
           level={4}
-          style={{ marginTop: 38, marginBottom: -4, textAlign: "center" }}
+          style={{ marginTop: 38, marginBottom: -4, textAlign: 'center' }}
         >
           Energy Consumption & Savings
         </Typography.Title>
-        <Typography.Paragraph style={{ marginBottom: 16, textAlign: "center" }}>
+        <Typography.Paragraph style={{ marginBottom: 16, textAlign: 'center' }}>
           <small>Past 30 Days</small>
         </Typography.Paragraph>
-        <img src={savingDiagram} width={"100%"} />
+        <img src={savingDiagram} width={'100%'} />
       </Modal>
     </Layout>
   );

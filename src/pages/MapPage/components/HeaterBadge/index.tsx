@@ -19,9 +19,6 @@ export const HeaterBadge = ({ radius, level, action }: any) => {
     colors[colors.length -1] = '#ff4d4f'
   }
 
-  console.log(level, action, colors)
-
-
   return (
     <div
       className={classNames(["handle", styles.badge])}
