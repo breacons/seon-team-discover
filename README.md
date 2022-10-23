@@ -1,3 +1,1 @@
-Files for the microcontroller are located in `embedded`.
-
-Everything else is for the frontend and backend, that can be tested with `yarn install && yarn start`.
+I'm a very basic React App. Fetch me, give me a Google Maps API Key in my .env under the name `REACT_APP_MAPS_KEY`, hit me with a `yarn install` and then time to fire up with a `yarn start`. Have fun! 😉
