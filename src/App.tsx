@@ -1,29 +1,17 @@
 import React from "react";
-import { rrfProps, store } from "./redux/store";
-import { Provider } from "react-redux";
-import LanguageProvider from "./components/LanguageProvider";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import {
-  ReactReduxFirebaseProvider,
-  firebaseReducer,
-} from "react-redux-firebase";
-import MapPage from "@/pages/MapPage";
+import DashboardPage from "./pages/DashboardPage";
+import MapLoader from "./components/MapLoader";
 
 function App() {
   return (
-    <Provider store={store}>
-      <ReactReduxFirebaseProvider {...rrfProps}>
-        <LanguageProvider>
+        <MapLoader>
           <BrowserRouter>
             <Routes>
-              <Route path={"/"} element={<MapPage />} />
+              <Route path={"/"} element={<DashboardPage />} />
             </Routes>
           </BrowserRouter>
-        </LanguageProvider>
-      </ReactReduxFirebaseProvider>
-    </Provider>
-
-    // </ConfigProvider>
+        </MapLoader>
   );
 }
 

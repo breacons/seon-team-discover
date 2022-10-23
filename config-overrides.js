@@ -39,7 +39,7 @@ module.exports = override((config, env) => {
             dark: false, // Enable dark mode
             compact: false, // Enable compact mode
           }),
-          '@primary-color': 'rgb(0, 106, 255)', // primary color for all components
+          '@primary-color': '#46B5A9', // primary color for all components
           // '@secondary-color': '#6aff00', // primary color for all components
           // '@link-color': '#74FBFD', // link color #1890ff #82BEE4
           // '@link-hover-color': '#82BEE4',
